@@ -1,0 +1,53 @@
+scanner:
+  quoteAsset: "USDT"
+  blacklist:
+    - "UP"
+    - "DOWN"
+    - "BULL"
+    - "BEAR"
+    - "3L"
+    - "3S"
+  # Leave empty to track all filtered pairs
+  watchlist: []
+
+pump:
+  enabled: true
+  pumpThreshold: 3.0      # % gain to trigger alert
+  dumpThreshold: -3.0     # % loss to trigger alert
+  cooldownMinutes: 30     # minimum gap between alerts per symbol
+  pollIntervalSeconds: 30 # how often to poll tickers
+
+  report:
+    enabled: true
+    schedule: "5 * * * *" # every hour at :05
+    topN: 5
+
+volume:
+  enabled: true
+  schedule: "1 * * * *"  # every hour at :01
+  interval: "1h"
+  lookbackCandles: 24
+  spikeMultiplier: 3.0    # alert when volume >= N × 24h average
+
+signals:
+  enabled: true
+  schedule: "0 */4 * * *" # every 4 hours
+  interval: "1h"
+  lookbackCandles: 100
+
+  rsi:
+    enabled: true
+    period: 14
+    overbought: 70
+    oversold: 30
+
+  macd:
+    enabled: true
+    fastPeriod: 12
+    slowPeriod: 26
+    signalPeriod: 9
+
+  bollingerBands:
+    enabled: true
+    period: 20
+    stdDev: 2
