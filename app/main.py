@@ -33,6 +33,16 @@ async def pump_loop(symbols: list[str], config: dict) -> None:
         await asyncio.sleep(poll_sec)
 
 
+async def signal_loop(symbols: list[str], config: dict) -> None:
+    poll_sec: int = config["pollIntervalSeconds"]
+    while True:
+        try:
+            await run_signal_scan(symbols, config, telegram.notify)
+        except Exception as e:
+            sys.stderr.write(f"Signal scan error: {e}\n")
+        await asyncio.sleep(poll_sec)
+
+
 async def main() -> None:
     config = load_config()
     telegram.init(config["telegram"]["token"], config["telegram"]["chat_id"])
@@ -45,7 +55,7 @@ async def main() -> None:
 
     scheduler = AsyncIOScheduler()
 
-    # Pump scanner: async polling loop
+    # Pump scanner: polling loop
     if config["pump"]["enabled"]:
         poll_sec = config["pump"]["pollIntervalSeconds"]
         print(f"Pump scanner: polling every {poll_sec}s")
@@ -71,15 +81,11 @@ async def main() -> None:
             args=[symbols, config["volume"], telegram.notify],
         )
 
-    # Signal scanner: cron
+    # Signal scanner: polling loop (every 5 min)
     if config["signals"]["enabled"]:
-        schedule = config["signals"]["schedule"]
-        print(f'Signal scanner: cron "{schedule}"')
-        scheduler.add_job(
-            run_signal_scan,
-            trigger=parse_cron(schedule),
-            args=[symbols, config["signals"], telegram.notify],
-        )
+        poll_sec = config["signals"]["pollIntervalSeconds"]
+        print(f"Signal scanner: polling every {poll_sec}s (interval: {config['signals']['interval']})")
+        asyncio.create_task(signal_loop(symbols, config["signals"]))
 
     scheduler.start()
 

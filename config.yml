@@ -11,15 +11,14 @@ scanner:
   watchlist: []
 
 pump:
-  enabled: true
-  pumpThreshold: 3.0      # % gain to trigger alert
-  dumpThreshold: -3.0     # % loss to trigger alert
-  cooldownMinutes: 30     # minimum gap between alerts per symbol
-  pollIntervalSeconds: 30 # how often to poll tickers
-
+  enabled: false
+  pumpThreshold: 3.0
+  dumpThreshold: -3.0
+  cooldownMinutes: 30
+  pollIntervalSeconds: 30
   report:
-    enabled: true
-    schedule: "5 * * * *" # every hour at :05
+    enabled: false
+    schedule: "5 * * * *"
     topN: 5
 
 volume:
@@ -27,27 +26,11 @@ volume:
   schedule: "1 * * * *"  # every hour at :01
   interval: "1h"
   lookbackCandles: 24
-  spikeMultiplier: 3.0    # alert when volume >= N × 24h average
+  spikeMultiplier: 3.0
 
 signals:
   enabled: true
-  schedule: "0 */4 * * *" # every 4 hours
-  interval: "1h"
-  lookbackCandles: 100
-
-  rsi:
-    enabled: true
-    period: 14
-    overbought: 70
-    oversold: 30
-
-  macd:
-    enabled: true
-    fastPeriod: 12
-    slowPeriod: 26
-    signalPeriod: 9
-
-  bollingerBands:
-    enabled: true
-    period: 20
-    stdDev: 2
+  interval: "15m"
+  pollIntervalSeconds: 300   # scan every 5 minutes
+  cooldownMinutes: 120       # same coin won't alert again for 2 hours
+  minScore: 80               # minimum score out of 100 to trigger alert
