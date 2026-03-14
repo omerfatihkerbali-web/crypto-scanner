@@ -59,4 +59,4 @@ signals:
   interval: "15m"
   pollIntervalSeconds: 300   # scan every 5 minutes
   cooldownMinutes: 120       # same coin won't alert again for 2 hours
-  minScore: 80               # minimum score out of 100 to trigger alert
+  minScore: 100              # minimum score out of 100 to trigger alert
