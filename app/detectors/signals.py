@@ -1,7 +1,7 @@
 import sys
 from typing import Callable, Awaitable
 
-import pandas_ta as ta
+import pandas_ta_classic as ta
 import pandas as pd
 
 from app.binance.client import get_klines, parse_kline
