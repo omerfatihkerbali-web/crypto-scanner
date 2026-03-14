@@ -1,42 +1,38 @@
 scanner:
   quoteAsset: "USDT"
+  # Substring match — only patterns that don't produce false positives
   blacklist:
     # Leveraged / inverse tokens
     - "UP"
     - "DOWN"
     - "BULL"
     - "BEAR"
-    - "3L"
-    - "3S"
-    # Stablecoins
-    - "XUSD"
+    # Stablecoins (safe substring patterns)
     - "USDC"
-    - "BUSD"
-    - "TUSD"
     - "USDP"
     - "DAI"
     - "FDUSD"
     - "USDE"
-    - "SUSD"
-    - "GUSD"
     - "FRAX"
     - "AEUR"
-    - "BEUR"
     - "EURI"
-    - "USDX"
-    - "USDD"
-    - "CUSD"
-    - "CEUR"
     - "USD1"
-    - "RLUSD"
-    - "UUSDT"
     # Wrapped tokens
     - "WBTC"
-    - "WETH"
-    - "WBNB"
-    - "STETH"
     - "BETH"
-    - "WSTETH"
+
+  # Exact match — full symbol names to exclude
+  exact_blacklist:
+    - "XUSDUSDT"
+    - "BUSDUSDT"
+    - "TUSDUSDT"
+    - "SUSDUSDT"
+    - "FDUSDUSDT"
+    - "USDSUSDT"
+    - "USTUSDT"
+    - "USTCUSDT"
+    - "USDCUSDT"
+    - "RLUSDUSDT"
   # Leave empty to track all filtered pairs
   watchlist: []
 
